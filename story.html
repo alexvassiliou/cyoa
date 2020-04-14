@@ -3,3 +3,9 @@
 {{range .Story}}
 <p>{{.}}</p>
 {{end}}
+
+{{range .Options}}
+<br>
+<a href="{{ .Arc}}">{{ .Text}}</a>
+<br>
+{{end}}
