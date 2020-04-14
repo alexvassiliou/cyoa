@@ -2,27 +2,26 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
-var storyHandler Adventure
+var a Adventure
 
 func main() {
 	filePath := "gopher.json"
 
-	adventures := Parse(filePath)
+	story := Parse(filePath)
 
-	for k := range adventures {
-		storyHandler.Title = adventures[k].Title
-		storyHandler.Story = adventures[k].Story
-		storyHandler.Options = adventures[k].Options
+	for k := range story {
+		a.Title = story[k].Title
+		a.Story = story[k].Story
+		a.Options = story[k].Options
 
 		route := fmt.Sprintf("/%s", k)
 
-		http.Handle(route, storyHandler)
+		http.Handle(route, a)
 	}
 
-	err := http.ListenAndServe(":8080", nil)
-	CheckError(err)
-
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
