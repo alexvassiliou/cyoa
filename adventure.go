@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io"
+	"html/template"
 	"net/http"
 )
 
@@ -16,5 +16,9 @@ type Adventure struct {
 }
 
 func (a Adventure) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "hello from baz")
+	t, err := template.ParseFiles("story.html")
+	CheckError(err)
+
+	err2 := t.Execute(w, a)
+	CheckError(err2)
 }
